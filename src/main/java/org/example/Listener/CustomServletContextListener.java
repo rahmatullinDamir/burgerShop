@@ -19,7 +19,7 @@ import javax.servlet.annotation.WebListener;
 public class CustomServletContextListener implements ServletContextListener {
 
     private static final String BD_USERNAME = "postgres";
-    private static final String BD_PASSWORD = "278145";
+    private static final String BD_PASSWORD = "admin";
     private static final String BD_URL = "jdbc:postgresql://localhost:5432/burgerDB";
     private static final String BD_DRIVER = "org.postgresql.Driver";
 

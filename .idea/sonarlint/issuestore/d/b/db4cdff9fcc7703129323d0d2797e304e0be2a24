@@ -1,0 +1,18 @@
+
+š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ëôÿûùÿÿÿÿJ$9dbe9145-9f1e-4b3c-b4a3-607bea40cc0e
+†
+java:S1854."ERemove this useless assignment to local variable "addressRepository".(ŒííåüÿÿÿÿJ$da9a479a-c981-4d2e-8d43-fcd681e18e2c
+…
+java:S1854-"DRemove this useless assignment to local variable "burgerRepository".(“ˆŞœúÿÿÿÿJ$244f2a6c-b1b2-4399-9904-4d82d446d016
+„
+java:S1854,"CRemove this useless assignment to local variable "imageRepository".(ãÒØıÿÿÿÿJ$5e3dd6ff-b216-4f1b-99f0-58115fdec8a8
+~
+java:S1854+"CRemove this useless assignment to local variable "orderRepository".(ıï J$49ec11b7-5bcd-4f86-8f58-a1f53781b825
+o
+java:S1481+"4Remove this unused "orderRepository" local variable.(ıï J$a77ad45e-d71e-40da-9abd-56560928a2bc
+u
+java:S1481,"4Remove this unused "imageRepository" local variable.(ãÒØıÿÿÿÿJ$cec58519-f50e-4dc7-aa37-b073f2c680c0
+v
+java:S1481-"5Remove this unused "burgerRepository" local variable.(“ˆŞœúÿÿÿÿJ$61877653-b79e-4c35-b811-8227cd22f554
+w
+java:S1481."6Remove this unused "addressRepository" local variable.(ŒííåüÿÿÿÿJ$9935a271-faf0-4fcd-8f54-9ebab2988d71

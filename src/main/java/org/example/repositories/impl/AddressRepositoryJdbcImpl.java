@@ -30,11 +30,11 @@ public class AddressRepositoryJdbcImpl implements AddressRepository {
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             return Optional.of(Address.builder()
-                    .id(resultSet.getInt("id"))
+                    .id(resultSet.getLong("id"))
                     .street(resultSet.getString("street"))
                     .city(resultSet.getString("city"))
-                    .house(resultSet.getString("house"))
-                    .flat(resultSet.getString("flat"))
+                    .house(resultSet.getLong("house"))
+                    .flat(resultSet.getLong("flat"))
                     .build());
         }
         return Optional.empty();
@@ -50,11 +50,11 @@ public class AddressRepositoryJdbcImpl implements AddressRepository {
 
         while (resultSet.next()) {
             addresses.add(Address.builder()
-                    .id(resultSet.getInt("id"))
+                    .id(resultSet.getLong("id"))
                     .street(resultSet.getString("street"))
                     .city(resultSet.getString("city"))
-                    .house(resultSet.getString("house"))
-                    .flat(resultSet.getString("flat"))
+                    .house(resultSet.getLong("house"))
+                    .flat(resultSet.getLong("flat"))
                     .build());
         }
         return addresses;
@@ -66,8 +66,8 @@ public class AddressRepositoryJdbcImpl implements AddressRepository {
         PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_ADDRESS);
         statement.setString(1, entity.getStreet());
         statement.setString(2, entity.getCity());
-        statement.setString(3, entity.getHouse());
-        statement.setString(4, entity.getFlat());
+        statement.setLong(3, entity.getHouse());
+        statement.setLong(4, entity.getFlat());
         statement.execute();
     }
 
@@ -77,9 +77,9 @@ public class AddressRepositoryJdbcImpl implements AddressRepository {
         PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ADDRESS);
         statement.setString(1, entity.getStreet());
         statement.setString(2, entity.getCity());
-        statement.setString(3, entity.getHouse());
-        statement.setString(4, entity.getFlat());
-        statement.setInt(5, entity.getId());
+        statement.setLong(3, entity.getHouse());
+        statement.setLong(4, entity.getFlat());
+        statement.setLong(5, entity.getId());
         statement.executeUpdate();
     }
 
