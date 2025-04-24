@@ -2,12 +2,8 @@ package org.example.Listener;
 
 import org.example.repositories.*;
 import org.example.repositories.impl.*;
-import org.example.service.ProfileService;
-import org.example.service.SignInService;
-import org.example.service.impl.ProfileServiceImpl;
-import org.example.service.impl.SignInServiceImpl;
-import org.example.service.SignUpService;
-import org.example.service.impl.SignUpServiceImpl;
+import org.example.service.*;
+import org.example.service.impl.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.servlet.ServletContext;
@@ -32,18 +28,29 @@ public class CustomServletContextListener implements ServletContextListener {
         dataSource.setPassword(BD_PASSWORD);
         dataSource.setUrl(BD_URL);
 
-        UserRepository userRepository = new UserRepositoryJdbcImpl(dataSource);
-        SignUpService signUpService = new SignUpServiceImpl(userRepository);
-        SignInService signInService = new SignInServiceImpl(userRepository);
-        ProfileService profileService = new ProfileServiceImpl(userRepository);
-        servletContext.setAttribute("signInService", signInService);
-        servletContext.setAttribute("signUpService", signUpService);
-        servletContext.setAttribute("profileService", profileService);
 
         OrderRepository orderRepository = new OrderRepositoryJdbcImpl(dataSource);
         ImageRepository imageRepository = new ImageRepositoryJdbcImpl(dataSource);
         BurgerRepository burgerRepository = new BurgerRepositoryJdbcImpl(dataSource);
         AddressRepository addressRepository = new AddressRepositoryJdbcImpl(dataSource);
+
+        UserRepository userRepository = new UserRepositoryJdbcImpl(dataSource);
+        SignUpService signUpService = new SignUpServiceImpl(userRepository);
+        SignInService signInService = new SignInServiceImpl(userRepository);
+        ProfileService profileService = new ProfileServiceImpl(userRepository);
+        BurgerService burgerService = new BurgerServiceImpl(burgerRepository);
+        OrderService orderService = new OrderServiceImpl(orderRepository);
+//        ImageService imageService = new ImageServiceImpl(imageRepository);
+
+
+        servletContext.setAttribute("signInService", signInService);
+        servletContext.setAttribute("signUpService", signUpService);
+        servletContext.setAttribute("profileService", profileService);
+        servletContext.setAttribute("burgerService", burgerService);
+        servletContext.setAttribute("orderService", orderService);
+//        servletContext.setAttribute("imageService", imageService);
+
+
 
     }
 }

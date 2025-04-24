@@ -48,18 +48,13 @@ public class BurgerRepositoryJdbcImpl implements BurgerRepository {
 
     @Override
     public void save(Burger burger) throws SQLException {
-        String sql = "INSERT INTO burger (name, price) VALUES (?, ?)";
+        String sql = "INSERT INTO burger (name, price, description) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, burger.getName());
-            statement.setDouble(2, burger.getPrice());
+            statement.setInt(2, burger.getPrice());
+            statement.setString(2, burger.getDescription());
             statement.executeUpdate();
-
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    burger.setId(generatedKeys.getLong(1));
-                }
-            }
         }
     }
 

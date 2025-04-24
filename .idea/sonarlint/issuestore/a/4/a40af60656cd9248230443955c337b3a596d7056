@@ -1,21 +1,21 @@
 
-„
-java:S2095-"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤ÎJ$108a8523-61be-475d-809c-327fdc8a106f
-l
-java:S2095M"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ïª’¡8©ãŸËæ2
-e
-java:S2095"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤Î8©ãŸËæ2
-l
-java:S2095B"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(š–Àó8©ãŸËæ2
-l
-java:S2095"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(º×ÈÄ8©ãŸËæ2
-i
-java:S2095."GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8©ãŸËæ2
-e
-java:S2095A"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤Î8©ãŸËæ2
-e
-java:S2095X"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤Î8©ãŸËæ2
 ‹
-java:S2095Y"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(™€ñ J$9ee52b44-71d6-4d0c-900d-15fdcab56bc7
-e
-java:S2095L"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤Î8©ãŸËæ2
+java:S2095A"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤Î8©ãŸËæ2J$17b78618-fedc-4465-989b-335451a64a52
+‹
+java:S2095X"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤Î8©ãŸËæ2J$c58a4095-7ad4-4013-afee-94c4177c2648
+‹
+java:S2095Y"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(™€ñ J$78a19cc8-8eeb-4dad-8638-501f34ca9c46
+‹
+java:S2095L"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤Î8©ãŸËæ2J$7245d360-33db-43dd-8752-8e2dddef183f
+’
+java:S2095"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(º×ÈÄ8©ãŸËæ2J$746ec3a6-cb20-445d-a885-78ba4dc3a3f1
+’
+java:S2095B"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(š–Àó8©ãŸËæ2J$0522fe19-e6ec-4d27-9f3e-e2149fdd1eee
+‹
+java:S2095"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤Î8©ãŸËæ2J$82db3427-0d2f-4a69-aa59-dfb3fda545bc
+„
+java:S2095-"HUse try-with-resources or close this "Connection" in a "finally" clause.(‘ğ¤ÎJ$a104527a-0898-4682-9f94-dc8854bcf229
+’
+java:S2095M"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ïª’¡8©ãŸËæ2J$d79255cf-d6d4-4b9f-bda1-5616bd76524b
+
+java:S2095."GUse try-with-resources or close this "Statement" in a "finally" clause.(é°Áµşÿÿÿÿ8©ãŸËæ2J$2c0386ce-a54b-41f1-b219-bd04ad280a2e

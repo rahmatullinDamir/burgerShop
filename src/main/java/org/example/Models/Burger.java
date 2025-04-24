@@ -7,9 +7,9 @@ import lombok.Data;
 @Builder
 
 public class Burger {
-    Long id;
-    int price;
-    String name;
-    String description;
+    private Long id;
+    private int price;
+    private String name;
+    private String description;
 
 }

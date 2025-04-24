@@ -1,0 +1,12 @@
+
+i
+java:S5411 "(Use a primitive boolean expression here.(ÛÀõ¸üÿÿÿÿJ$dbe5ce66-9e9c-4930-a57d-fcf8e821be76
+d
+java:S5411*"(Use a primitive boolean expression here.(ÞÇ›êJ$c1fab666-9341-4a97-8df6-085c98bebb1e
+š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¼è±ÆüÿÿÿÿJ$d0413756-92fe-4ba9-9127-5c65d3f5a67a
+Â
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ü›ºÆýÿÿÿÿJ$38382aeb-a7bc-4c8d-8d2e-5dbae6888f67
+½
+java:S11864"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‚“¶îJ$c5b5c3f3-953a-4ead-820f-f83347220d2a
+Ž
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Ø‰ºšJ$87375aca-7cf3-4906-ada7-fff46390c266
