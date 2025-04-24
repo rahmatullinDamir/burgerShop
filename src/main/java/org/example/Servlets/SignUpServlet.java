@@ -61,6 +61,10 @@ public class SignUpServlet extends HttpServlet {
         SignUpForm signUpForm = SignUpForm.builder()
                 .password(password)
                 .username(username)
+                .street(req.getParameter("street"))
+                .city(req.getParameter("city"))
+                .house(Long.valueOf(req.getParameter("house")))
+                .flat(Long.valueOf(req.getParameter("flat")))
                 .build();
 
 

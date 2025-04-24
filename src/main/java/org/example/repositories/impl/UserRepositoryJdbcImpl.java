@@ -15,7 +15,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
     private static final String SQL_SELECT_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
     private static final String SQL_SELECT_ALL = "SELECT * FROM users";
     private static final String SQL_SELECT_FROM_USERS_BY_ID = "SELECT * FROM users WHERE id = ?";
-    private static final String SQL_INSERT_NEW_USER = "INSERT INTO users (username, password) VALUES (?, ?)";
+    private static final String SQL_INSERT_NEW_USER = "INSERT INTO users (username, password, addressid) VALUES (?, ?, ?)";
     private static final String SQL_DELETE_USER = "DELETE FROM users WHERE id = ?";
 
     private DataSource dataSource;
@@ -40,7 +40,8 @@ public class UserRepositoryJdbcImpl implements UserRepository {
             return Optional.of(new User(resultSet.getLong("id"),
                     resultSet.getString("username"),
                     resultSet.getString("password"),
-                    resultSet.getString("role")));
+                    resultSet.getString("role"),
+                    resultSet.getLong("addressid")));
         }
 
         return Optional.empty();
@@ -58,7 +59,8 @@ public class UserRepositoryJdbcImpl implements UserRepository {
             User user = new User(resultSet.getLong("id"),
                     resultSet.getString("username"),
                     resultSet.getString("password"),
-                    resultSet.getString("role"));
+                    resultSet.getString("role"),
+                    resultSet.getLong("addressid"));
             result.add(user);
         }
 
@@ -72,6 +74,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
         PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_USER);
         statement.setString(1, entity.getUsername());
         statement.setString(2, entity.getPassword());
+        statement.setLong(3, entity.getAddressid());
         statement.executeUpdate();
     }
 
@@ -101,7 +104,8 @@ public class UserRepositoryJdbcImpl implements UserRepository {
             return Optional.of(new User(resultSet.getLong("id"),
                     resultSet.getString("username"),
                     resultSet.getString("password"),
-                    resultSet.getString("role")));
+                    resultSet.getString("role"),
+                    resultSet.getLong("addressid")));
         }
 
         return Optional.empty();

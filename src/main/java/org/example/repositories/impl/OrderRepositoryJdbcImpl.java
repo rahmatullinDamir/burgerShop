@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderRepositoryJdbcImpl implements OrderRepository {
-    private static final String SQL_SELECT_FROM_Order_BY_ID = "SELECT * FROM Order WHERE id = ?";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM Order";
-    private static final String SQL_SELECT_FROM_Order_BY_USER = "SELECT * FROM Order WHERE user_id = ?";
-    private static final String SQL_INSERT_NEW_Order = "INSERT INTO Order (userid, addressid) VALUES (?, ?)";
-    private static final String SQL_UPDATE_Order = "UPDATE Order SET userid = ?, address = ? WHERE id = ?";
-    private static final String SQL_DELETE_Order = "DELETE FROM Order WHERE id = ?";
+    private static final String SQL_SELECT_FROM_ORDER_BY_ID = "SELECT * FROM orders WHERE id = ?";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM orders";
+    private static final String SQL_SELECT_FROM_ORDER_BY_USER = "SELECT * FROM orders WHERE userid = ?";
+    private static final String SQL_INSERT_NEW_ORDER = "INSERT INTO orders (userid, addressid) VALUES (?, ?)";
+    private static final String SQL_UPDATE_ORDER = "UPDATE orders SET userid = ?, addressid = ? WHERE id = ?";
+    private static final String SQL_DELETE_ORDER = "DELETE FROM orders WHERE id = ?";
 
     private DataSource dataSource;
 
@@ -26,7 +26,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     @Override
     public List<Order> findByUser(Long id) throws SQLException {
         Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_Order_BY_USER);
+        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_ORDER_BY_USER);
         statement.setLong(1, id);
         ResultSet resultSet = statement.executeQuery();
         List<Order> Orders = new ArrayList<>();
@@ -62,7 +62,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     @Override
     public Optional<Order> findById(Long id) throws SQLException {
         Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_Order_BY_ID);
+        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_ORDER_BY_ID);
         statement.setLong(1, id);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
@@ -77,7 +77,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     @Override
     public void save(Order entity) throws SQLException {
         Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_Order);
+        PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_ORDER);
         statement.setLong(1, entity.getUserId());
         statement.setLong(2, entity.getAddressId());
         statement.execute();
@@ -86,7 +86,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     @Override
     public void update(Order entity) throws SQLException {
         Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_Order);
+        PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER);
         statement.setLong(1, entity.getUserId());
         statement.setLong(2, entity.getAddressId());
         statement.executeUpdate();
@@ -96,7 +96,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     @Override
     public void remove(Long id) throws SQLException {
         Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_Order);
+        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ORDER);
         statement.setLong(1, id);
         statement.executeUpdate();
     }

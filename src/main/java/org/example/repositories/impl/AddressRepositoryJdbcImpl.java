@@ -15,6 +15,7 @@ public class AddressRepositoryJdbcImpl implements AddressRepository {
     private static final String SQL_INSERT_NEW_ADDRESS = "INSERT INTO Address (street, city, house, flat) VALUES (?, ?, ?, ?)";
     private static final String SQL_UPDATE_ADDRESS = "UPDATE Address SET street = ?, city = ?, house = ?, flat = ? WHERE id = ?";
     private static final String SQL_DELETE_ADDRESS = "DELETE FROM Address WHERE id = ?";
+    private static final String SQL_SELECT_ID_BY_ADDRESS = "SELECT * FROM Address WHERE street = ? AND city = ? AND house = ? AND flat = ?";
 
     private DataSource dataSource;
 
@@ -89,5 +90,20 @@ public class AddressRepositoryJdbcImpl implements AddressRepository {
         PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ADDRESS);
         statement.setLong(1, id);
         statement.executeUpdate();
+    }
+
+    @Override
+    public Long findIdByAddress(Address address) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID_BY_ADDRESS);
+        statement.setString(1, address.getStreet());
+        statement.setString(2, address.getCity());
+        statement.setLong(3, address.getHouse());
+        statement.setLong(4, address.getFlat());
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getLong(1);
+        }
+        return null;
     }
 }

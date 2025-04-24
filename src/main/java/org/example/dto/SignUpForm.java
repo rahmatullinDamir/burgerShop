@@ -9,4 +9,8 @@ import lombok.Data;
 public class SignUpForm {
     private String username;
     private String password;
+    private String street;
+    private String city;
+    private Long house;
+    private Long flat;
 }

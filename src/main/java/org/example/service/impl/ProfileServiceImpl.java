@@ -35,4 +35,16 @@ public class ProfileServiceImpl implements ProfileService {
 
     }
 
+    @Override
+    public void updateUser(UserDto userDto) {
+        User user = User.builder()
+                .id(userDto.getId())
+                .username(userDto.getUsername())
+                .build();
+        try {
+            userRepository.update(user);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
