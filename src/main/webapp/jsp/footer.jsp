@@ -9,7 +9,7 @@
 </body>
 <footer class="footer">
     <div class="footer__bottom">
-        <p>&copy; 2023 Burger Shop. All rights are reserved.</p>
+        <p>&copy; 2025 Burger Shop. All rights are reserved.</p>
     </div>
 </footer>
 </html>

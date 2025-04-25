@@ -32,7 +32,7 @@ public class ImageServiceImpl implements ImageService {
                 .build();
 
         try {
-            Files.copy(file, Paths.get("C://Users//kim85//IdeaProjects//orisSemestr//src//main//webapp//image/" + image.getStorageFileName() + "." + image.getType().split("/")[1]));
+            Files.copy(file, Paths.get("/Users/moriarty/IdeaProjects/burgerShop/src/main/webapp/image/" + image.getStorageFileName() + "." + image.getType().split("/")[1]));
             imageRepository.save(image);
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
@@ -47,7 +47,7 @@ public class ImageServiceImpl implements ImageService {
             Optional<Image> imageOptional = imageRepository.findById(fileId);
             if (imageOptional.isPresent()) {
                 image = imageOptional.get();
-                File file = new File("C://Users//kim85//IdeaProjects//orisSemestr//src//main//webapp//image/" + image.getStorageFileName() + "." + image.getType().split("/")[1]);
+                File file = new File("/Users/moriarty/IdeaProjects/burgerShop/src/main/webapp/image/" + image.getStorageFileName() + "." + image.getType().split("/")[1]);
                 Files.copy(file.toPath(), outputStream);
             }
         } catch (IOException e) {
@@ -69,7 +69,7 @@ public class ImageServiceImpl implements ImageService {
         Optional<Image> imageOptional = imageRepository.findById(fileId);
         if (imageOptional.isPresent()) {
             Image image = imageOptional.get();
-            String filePath = "C://Users//kim85//IdeaProjects//orisSemestr//src//main//webapp//image/" + image.getStorageFileName() + "." + image.getType().split("/")[1];
+            String filePath = "/Users/moriarty/IdeaProjects/burgerShop/src/main/webapp/image/" + image.getStorageFileName() + "." + image.getType().split("/")[1];
             Files.delete(Paths.get(filePath));
             imageRepository.remove(fileId);
 
