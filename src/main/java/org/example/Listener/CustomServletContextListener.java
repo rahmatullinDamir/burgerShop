@@ -41,6 +41,7 @@ public class CustomServletContextListener implements ServletContextListener {
         BurgerService burgerService = new BurgerServiceImpl(burgerRepository);
         OrderService orderService = new OrderServiceImpl(orderRepository);
         ImageService imageService = new ImageServiceImpl(imageRepository);
+        AddressService addressService = new AddressServiceImpl(addressRepository);
 
         servletContext.setAttribute("signInService", signInService);
         servletContext.setAttribute("signUpService", signUpService);
@@ -48,6 +49,7 @@ public class CustomServletContextListener implements ServletContextListener {
         servletContext.setAttribute("burgerService", burgerService);
         servletContext.setAttribute("orderService", orderService);
         servletContext.setAttribute("imageService", imageService);
+        servletContext.setAttribute("addressService", addressService);
 
 
 

@@ -5,12 +5,41 @@
   Time: 22:12
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-    {profile.username}
-</body>
-</html>
+
+<%@include file="header.jsp"%>
+
+<div class="profile-header">
+    <div class="profile-info">
+        <img src="/static/avatar.jpg" alt="avatar" class="profile-avatar">
+        <p class="profile-username">${sessionScope.username}</p>
+    </div>
+</div>
+
+<form action="/profile" method="POST" class="profile-form">
+    <div class="form-group">
+        <div class="form-field-container">
+            <label class="form-label" for="street">Street</label>
+            <input class="form-input" type="text" id="street" name="street" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-field-container">
+            <label class="form-label" for="city">City</label>
+            <input class="form-input" type="text" id="city" name="city" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-field-container">
+            <label class="form-label" for="house">House</label>
+            <input class="form-input" type="text" id="house" name="house" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-field-container">
+            <label class="form-label" for="flat">Flat</label>
+            <input class="form-input" type="text" id="flat" name="flat" required>
+        </div>
+    </div>
+</form>
+
+<%@include file="footer.jsp"%>

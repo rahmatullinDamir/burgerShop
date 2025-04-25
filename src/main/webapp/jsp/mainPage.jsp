@@ -5,21 +5,15 @@
   Time: 15:56
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page isELIgnored="false" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@include file="header.jsp"%>
 
-<div class="container">
-    <div class="item">
-       <c:forEach items="${burgers}" var="burger">
+<div class="item">
+    <c:forEach items="${burgers}" var="burger">
            <p>${burger.name}</p>
            <p>${burger.description}</p>
            <p>${burger.price}</p>
 <%--           <p>${burger.image}</p>--%>
-       </c:forEach>
-    </div>
+    </c:forEach>
 </div>
 
 <%@include file="footer.jsp"%>

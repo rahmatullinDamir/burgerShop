@@ -44,6 +44,11 @@ public class AddressServiceImpl implements AddressService {
                 .house(addressDto.getHouse())
                 .flat(addressDto.getFlat())
                 .build();
+        try {
+            addressRepository.update(address);
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

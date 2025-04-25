@@ -25,7 +25,20 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        Long id = (Long) req.getSession().getAttribute("id");
+        UserDto userDto = profileService.getUserById(id);
+        String street = req.getParameter("street");
+        String city = req.getParameter("city");
+        Long house = Long.parseLong(req.getParameter("house"));
+        Long flat = Long.parseLong(req.getParameter("flat"));
+        AddressDto addressDto = AddressDto.builder()
+                .id(userDto.getId())
+                .street(street)
+                .city(city)
+                .house(house)
+                .flat(flat)
+                .build();
+        addressService.updateAddress(addressDto);
     }
 
     @Override

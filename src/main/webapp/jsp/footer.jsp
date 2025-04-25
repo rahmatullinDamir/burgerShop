@@ -5,6 +5,7 @@
   Time: 02:31
   To change this template use File | Settings | File Templates.
 --%>
+</div>
 </body>
 <footer class="footer">
     <div class="footer__bottom">

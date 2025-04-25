@@ -34,7 +34,7 @@ public class SignUpServiceImpl implements SignUpService {
                 .build();
         addressRepository.save(address);
         Long addressid = addressRepository.findIdByAddress(address);
-        System.out.println(addressid);
+
         User user = User.builder()
                 .username(signUpForm.getUsername())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))

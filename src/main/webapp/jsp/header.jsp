@@ -5,6 +5,9 @@
   Time: 02:29
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +19,9 @@
 <body>
 <header class="header">
     <div class="header__container">
+
         <div class="header__logo">
-            <img src="/static/logo.png" alt="Логотип Бургерного рая">
+            <a href="/"><img src="/static/logo.png" alt="Логотип Бургерного рая"></a>
             <h1 class="header__title">Burger Shop</h1>
         </div>
         <nav class="header__nav">
@@ -31,3 +35,4 @@
         </nav>
     </div>
 </header>
+<div class="container">

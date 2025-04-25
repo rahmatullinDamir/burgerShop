@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Authorization</title>
-    <link rel="stylesheet" href="../css/signIn.css">
+    <link rel="stylesheet" href="/static/signIn.css">
 </head>
 <body>
 <div class="form-container">
