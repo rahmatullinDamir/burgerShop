@@ -11,9 +11,9 @@ public interface BurgerService {
 
     BurgerDto findById(Long id) throws SQLException;
 
-    void update(Burger burger) throws SQLException;
-
     void deleteById(Long id) throws SQLException;
 
-    void save(Burger burger) throws SQLException;
+    void save(BurgerDto burgerDto) throws SQLException;
+
+    BurgerDto findByName(String name) throws SQLException;
 }

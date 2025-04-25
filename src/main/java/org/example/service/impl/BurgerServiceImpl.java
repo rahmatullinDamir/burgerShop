@@ -24,8 +24,9 @@ public class BurgerServiceImpl implements BurgerService {
         List<BurgerDto> burgerDtos = new ArrayList<>();
         try {
             List<Burger> burgers = burgerRepository.findAll();
-            for (Burger burger: burgers) {
+            for (Burger burger : burgers) {
                 burgerDtos.add(BurgerDto.builder()
+                        .id(burger.getId())
                         .price(burger.getPrice())
                         .name(burger.getName())
                         .description(burger.getDescription())
@@ -50,10 +51,6 @@ public class BurgerServiceImpl implements BurgerService {
         return null;
     }
 
-    @Override
-    public void update(Burger burger) throws SQLException {
-        burgerRepository.update(burger);
-    }
 
     @Override
     public void deleteById(Long id) throws SQLException {
@@ -61,7 +58,28 @@ public class BurgerServiceImpl implements BurgerService {
     }
 
     @Override
-    public void save(Burger burger) throws SQLException {
+    public void save(BurgerDto burgerDto) throws SQLException {
+        Burger burger = Burger.builder()
+                .name(burgerDto.getName())
+                .description(burgerDto.getDescription())
+                .price(burgerDto.getPrice())
+                .build();
         burgerRepository.save(burger);
+    }
+
+    @Override
+    public BurgerDto findByName(String name) throws SQLException {
+        Optional<Burger> optionalBurger = burgerRepository.findByName(name);
+        if (optionalBurger.isPresent()) {
+            Burger burger = optionalBurger.get();
+            return BurgerDto.builder()
+                    .id(burger.getId())
+                    .description(burger.getDescription())
+                    .price(burger.getPrice())
+                    .name(burger.getName())
+                    .build();
+        }
+        return null;
+
     }
 }

@@ -19,27 +19,28 @@
     <div class="form-group">
         <div class="form-field-container">
             <label class="form-label" for="street">Street</label>
-            <input class="form-input" type="text" id="street" name="street" required>
+            <input class="form-input" type="text" id="street" name="street" value="${address.street}" required>
         </div>
     </div>
     <div class="form-group">
         <div class="form-field-container">
             <label class="form-label" for="city">City</label>
-            <input class="form-input" type="text" id="city" name="city" required>
+            <input class="form-input" type="text" id="city" name="city" value="${address.city}" required>
         </div>
     </div>
     <div class="form-group">
         <div class="form-field-container">
             <label class="form-label" for="house">House</label>
-            <input class="form-input" type="text" id="house" name="house" required>
+            <input class="form-input" type="text" id="house" name="house" value="${address.house}" required>
         </div>
     </div>
     <div class="form-group">
         <div class="form-field-container">
             <label class="form-label" for="flat">Flat</label>
-            <input class="form-input" type="text" id="flat" name="flat" required>
+            <input class="form-input" type="text" id="flat" name="flat" value="${address.flat}" required>
         </div>
     </div>
-</form>
 
+    <button type="submit" class="form-input">Change address</button>
+</form>
 <%@include file="footer.jsp"%>

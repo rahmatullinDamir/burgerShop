@@ -40,8 +40,8 @@
         </div>
 
         <div class="form-buttons">
-            <button type="submit" class="form-button">Войти</button>
-            <a href="${pageContext.request.contextPath}/signUp" class="form-button">Регистрация</a>
+            <button type="submit" class="form-button">Log in</button>
+            <a href="${pageContext.request.contextPath}/signUp" class="form-button">Sign up</a>
         </div>
     </form>
 </div>

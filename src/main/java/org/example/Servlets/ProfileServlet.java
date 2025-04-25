@@ -39,6 +39,8 @@ public class ProfileServlet extends HttpServlet {
                 .flat(flat)
                 .build();
         addressService.updateAddress(addressDto);
+
+        resp.sendRedirect("/profile");
     }
 
     @Override
@@ -48,6 +50,6 @@ public class ProfileServlet extends HttpServlet {
         AddressDto addressDto = addressService.getAddressById(userDto.getId());
         req.setAttribute("user", userDto);
         req.setAttribute("address", addressDto);
-        req.getRequestDispatcher("/profile.jsp").forward(req, resp);
+        req.getRequestDispatcher("jsp/profile.jsp").forward(req, resp);
     }
 }

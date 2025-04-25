@@ -37,9 +37,10 @@ public class MainPageServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            req.setAttribute("burgerWithImages", burgerWithImages);
-        }
 
+        }
+        System.out.println(burgerWithImages);
+        req.setAttribute("burgerWithImages", burgerWithImages);
         req.getRequestDispatcher("/jsp/mainPage.jsp").forward(req, resp);
     }
 }

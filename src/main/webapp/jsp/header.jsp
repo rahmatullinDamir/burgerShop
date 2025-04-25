@@ -16,6 +16,12 @@
     <title>BurgerShop</title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cartCountElement = document.getElementById("cart-count");
+        cartCountElement.textContent = ${sessionScope.cart != null ? sessionScope.cart.size() : 0};
+    });
+</script>
 <body>
 <header class="header">
     <div class="header__container">
@@ -29,7 +35,11 @@
                 <c:if test="${sessionScope.role == 'ADMIN'}">
                     <li><a href="/admin">Admin</a></li>
                 </c:if>
-                <li><a href="/cart">Cart</a></li>
+                <li>
+                    <a href="/cart">
+                        Cart(<span id="cart-count">0</span>)
+                    </a>
+                </li>
                 <li><a href="/profile">Profile</a></li>
             </ul>
         </nav>

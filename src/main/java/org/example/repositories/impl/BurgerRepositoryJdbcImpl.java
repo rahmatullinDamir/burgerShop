@@ -47,33 +47,45 @@ public class BurgerRepositoryJdbcImpl implements BurgerRepository {
     }
 
     @Override
-    public void save(Burger burger) throws SQLException {
-        String sql = "INSERT INTO burger (name, price) VALUES (?, ?)";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, burger.getName());
-            statement.setDouble(2, burger.getPrice());
-            statement.executeUpdate();
+    public Optional<Burger> findByName(String name) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        String sql = "SELECT * FROM burger WHERE name = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, name);
 
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    burger.setId(generatedKeys.getLong(1));
-                }
-            }
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            return Optional.of(mapRowToBurger(resultSet));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public void save(Burger burger) throws SQLException {
+        String sql = "INSERT INTO burger (name, price, description) VALUES (?, ?, ?)";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, burger.getName());
+            statement.setInt(2, burger.getPrice());
+            statement.setString(3, burger.getDescription());
+            statement.executeUpdate();
         }
     }
 
     @Override
     public void update(Burger burger) throws SQLException {
-        String sql = "UPDATE burger SET name = ?, price = ? WHERE id = ?";
+        String sql = "UPDATE burger SET name = ?, price = ?, description = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, burger.getName());
             statement.setDouble(2, burger.getPrice());
-            statement.setLong(3, burger.getId());
+            statement.setString(3, burger.getDescription());
+            statement.setLong(4, burger.getId());
             statement.executeUpdate();
         }
     }
+
 
     @Override
     public void remove(Long id) throws SQLException {
@@ -94,4 +106,6 @@ public class BurgerRepositoryJdbcImpl implements BurgerRepository {
                 .build();
         return burger;
     }
+
+
 }
