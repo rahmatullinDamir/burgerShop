@@ -6,18 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@include file="header.jsp"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<head>
-  <title>Admin Panel</title>
-</head>
-<body>
 <div class="admin-container">
   <h1>Burger Admin Panel</h1>
 
-  <!-- Add Burger Form -->
   <div class="add-burger-form">
-    <h2>Add New Burger</h2>
     <form action="/admin" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label for="name">Burger Name:</label>
@@ -34,13 +26,11 @@
         <textarea id="text" name="text" rows="3" required></textarea>
       </div>
 
-      <input type="file" name="image">
+      <input type="file" name="image" required>
 
       <button type="submit" class="submit-btn">Add Burger</button>
     </form>
   </div>
 
-  </div>
-</body>
-</html>
+</div>
 <%@include file="footer.jsp"%>

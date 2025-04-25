@@ -98,3 +98,13 @@ body {
 .form-button[href]:hover {
     background-color: #455a64;
 }
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.form-input:invalid {
+    border-color: red;
+}

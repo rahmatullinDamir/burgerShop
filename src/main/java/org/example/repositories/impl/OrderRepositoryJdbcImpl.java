@@ -13,8 +13,8 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     private static final String SQL_SELECT_FROM_ORDER_BY_ID = "SELECT * FROM orders WHERE id = ?";
     private static final String SQL_SELECT_ALL = "SELECT * FROM orders";
     private static final String SQL_SELECT_FROM_ORDER_BY_USER = "SELECT * FROM orders WHERE userid = ?";
-    private static final String SQL_INSERT_NEW_ORDER = "INSERT INTO orders (userid, addressid) VALUES (?, ?)";
-    private static final String SQL_UPDATE_ORDER = "UPDATE orders SET userid = ?, addressid = ? WHERE id = ?";
+    private static final String SQL_INSERT_NEW_ORDER = "INSERT INTO orders (userid, addressid, burgerid, quantity) VALUES (?, ?, ?, ?)";
+    private static final String SQL_UPDATE_ORDER = "UPDATE orders SET userid = ?, burgerid = ?, quantity = ? WHERE id = ?";
     private static final String SQL_DELETE_ORDER = "DELETE FROM orders WHERE id = ?";
 
     private DataSource dataSource;
@@ -31,11 +31,10 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
         ResultSet resultSet = statement.executeQuery();
         List<Order> Orders = new ArrayList<>();
         while (resultSet.next()) {
-            Orders.add(new Order(
-                    resultSet.getLong("id"),
+            Orders.add(new Order(  resultSet.getLong("id"),
                     resultSet.getLong("userid"),
-                    resultSet.getLong("addressid")
-            ));
+                    resultSet.getLong("burgerid"),
+                    resultSet.getLong("quantity")));
         }
         return Orders;
     }
@@ -51,9 +50,10 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
         List<Order> Orders = new ArrayList<>();
 
         while (resultSet.next()) {
-            Order Order = new Order(resultSet.getLong("id"),
+            Order Order = new Order(  resultSet.getLong("id"),
                     resultSet.getLong("userid"),
-                    resultSet.getLong("addressid"));
+                    resultSet.getLong("burgerid"),
+                    resultSet.getLong("quantity"));
             Orders.add(Order);
         }
         return Orders;
@@ -69,7 +69,8 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
             return Optional.of(new Order(
                     resultSet.getLong("id"),
                     resultSet.getLong("userid"),
-                    resultSet.getLong("addressid")));
+                    resultSet.getLong("burgerid"),
+                    resultSet.getLong("quantity")));
         }
         return Optional.empty();
     }
@@ -79,7 +80,8 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_ORDER);
         statement.setLong(1, entity.getUserId());
-        statement.setLong(2, entity.getAddressId());
+        statement.setLong(2, entity.getBurgerid());
+        statement.setLong(3, entity.getQuantity());
         statement.execute();
     }
 
@@ -88,7 +90,9 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER);
         statement.setLong(1, entity.getUserId());
-        statement.setLong(2, entity.getAddressId());
+        statement.setLong(2, entity.getBurgerid());
+        statement.setLong(3, entity.getQuantity());
+        statement.setLong(4, entity.getId());
         statement.executeUpdate();
     }
 

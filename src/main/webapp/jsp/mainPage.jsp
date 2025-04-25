@@ -9,14 +9,16 @@
 
 <div class="item">
     <c:forEach items="${burgerWithImages}" var="burger">
-           <p>${burger.burger.name}</p>
-           <p>${burger.burger.description}</p>
-           <p>${burger.burger.price}</p>
-           <p><div class="post-image">
-        <img src="${pageContext.request.contextPath}/uploaded/files?id=${burger.image.id}"
-             alt="Post Image">
+        <div>
+            <div class="post-image">
+                <img src="${pageContext.request.contextPath}/uploaded/files?id=${burger.image.id}"
+                     alt="Burger Image">
+            </div>
+            <p>${burger.burger.name}</p>
+            <p>${burger.burger.description}</p>
+            <p>${burger.burger.price} rub</p>
+            <button onclick="updateCart(${burger.burger.id}, 'add')">Add to Cart</button>
         </div>
-        <button onclick="updateCart(${burger.burger.id}, 'add')">Add to Cart</button>
     </c:forEach>
 </div>
 
@@ -45,21 +47,3 @@
     }
 </script>
 <%@include file="footer.jsp"%>
-<%--<!DOCTYPE html>--%>
-<%--<html>--%>
-<%--    <head>--%>
-<%--        <title>Burgers</title>--%>
-<%--    </head>--%>
-<%--    <body>--%>
-<%--    <div class="container">--%>
-<%--        <div class="item">Header</div>--%>
-<%--        <div class="item">Content</div>--%>
-<%--        <div class="item">Footer</div>--%>
-<%--    </div>--%>
-<%--    <c:forEach items="${burgers}" var="burger">--%>
-<%--        <p>${burger.price}</p>--%>
-<%--        <p>${burger.description}</p>--%>
-<%--        <p>${burger.name}</p>--%>
-<%--    </c:forEach>--%>
-<%--    </body>--%>
-<%--</html>--%>

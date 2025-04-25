@@ -1,10 +1,12 @@
 package org.example.service.impl;
 
 import org.example.Models.Order;
+import org.example.dto.OrderDto;
 import org.example.repositories.OrderRepository;
 import org.example.service.OrderService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
@@ -14,22 +16,43 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public void save(Order order) throws SQLException {
+    @Override
+    public void save(OrderDto orderDto) throws SQLException {
+        Order order = Order.builder()
+                .userId(orderDto.getUserId())
+                .burgerid(orderDto.getBurgerid())
+                .quantity(orderDto.getQuantity())
+                .build();
         orderRepository.save(order);
     }
 
+    @Override
     public void delete(Long orderId) throws SQLException {
         orderRepository.remove(orderId);
     }
 
-    public List<Order> findOrdersByUserId(Long userId) throws SQLException {
-        return orderRepository.findByUser(userId);
+    @Override
+    public List<OrderDto> findOrdersByUserId(Long userId) throws SQLException {
+        List<OrderDto> orderDtos = new ArrayList<>();
+        List<Order> orders = orderRepository.findByUser(userId);
+        for (Order order : orders) {
+            orderDtos.add(OrderDto.builder()
+                    .orderId(order.getId())
+                    .burgerid(order.getBurgerid())
+                    .userId(order.getUserId())
+                    .quantity(order.getQuantity())
+                    .build());
+        }return orderDtos;
     }
 
-    public List<Order> findAllOrders() throws SQLException {
-        return orderRepository.findAll();
+    @Override
+    public void update(OrderDto orderDto) throws SQLException {
+        Order order = Order.builder()
+                .userId(orderDto.getUserId())
+                .burgerid(orderDto.getBurgerid())
+                .quantity(orderDto.getQuantity())
+                .id(orderDto.getOrderId())
+                .build();
+        orderRepository.update(order);
     }
-
-
-
 }

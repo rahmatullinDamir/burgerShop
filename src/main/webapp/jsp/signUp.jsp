@@ -79,23 +79,61 @@
 
 <script>
   document.getElementById('signUpForm').addEventListener('submit', function(event) {
-    const password = document.getElementById('password').value;
-    const username = document.getElementById('username').value.trim();
+    event.preventDefault();
 
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const street = document.getElementById('street').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const house = document.getElementById('house').value.trim();
+    const flat = document.getElementById('flat').value.trim();
+
+    let isValid = true;
+
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
 
     if (!username) {
-      alert('Пожалуйста, заполните все поля.');
-      event.preventDefault();
-      return;
+      showError('username', 'Username is required.');
+      isValid = false;
     }
-
 
     if (password.length < 6) {
-      alert('Пароль должен содержать не менее 6 символов.');
-      event.preventDefault();
-      return;
+      showError('password', 'Password must be at least 6 characters long.');
+      isValid = false;
+    }
+
+    if (!street) {
+      showError('street', 'Street is required.');
+      isValid = false;
+    }
+
+    if (!city) {
+      showError('city', 'City is required.');
+      isValid = false;
+    }
+
+    if (!house || isNaN(house)) {
+      showError('house', 'House number must be a number.');
+      isValid = false;
+    }
+
+    if (!flat || isNaN(flat)) {
+      showError('flat', 'Flat number must be a number.');
+      isValid = false;
+    }
+
+    if (isValid) {
+      this.submit();
     }
   });
+
+  function showError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    field.parentElement.appendChild(errorDiv);
+  }
 </script>
 </body>
 </html>
