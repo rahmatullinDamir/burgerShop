@@ -12,6 +12,6 @@ public class Image {
     private String originalFileName;
     private String storageFileName;
     private Long size;
-    private Long burgerId;
+    private Long burgerid;
     private String type;
 }

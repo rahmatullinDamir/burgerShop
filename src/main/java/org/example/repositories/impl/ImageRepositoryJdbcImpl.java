@@ -24,7 +24,7 @@ public class ImageRepositoryJdbcImpl implements ImageRepository {
     }
 
     //language=SQL
-    private final static String SQL_SELECT_BY_PARAM_ = "select * from image where originalfilename = ? and burgerid = ? and size = ? order by id desc limit 1";
+    private final static String SQL_SELECT_BY_PARAM_ = "select * from image where originalfilename = ? and burgerId = ? and size = ? order by id desc limit 1";
     //language=SQL
     private final static String SQL_INSERT = "insert into image(originalfilename, storagefilename, type, burgerid, size) " + "values (?, ?, ?, ?, ?)";
     //language=SQL
@@ -40,7 +40,7 @@ public class ImageRepositoryJdbcImpl implements ImageRepository {
                     .originalFileName(row.getString("originalfilename"))
                     .storageFileName(row.getString("storagefilename"))
                     .type(row.getString("type"))
-                    .burgerId(row.getLong("burgerid"))
+                    .burgerid(row.getLong("burgerid"))
                     .size(row.getLong("size"))
                     .build();
 
@@ -60,7 +60,7 @@ public class ImageRepositoryJdbcImpl implements ImageRepository {
     public void save(Image entity) {
         jdbcTemplate.update(SQL_INSERT, entity.getOriginalFileName(), entity.getStorageFileName(),
                 entity.getType(),
-                entity.getBurgerId(),
+                entity.getBurgerid(),
                 entity.getSize());
     }
 
@@ -80,7 +80,7 @@ public class ImageRepositoryJdbcImpl implements ImageRepository {
 
 
     @Override
-    public Optional<Image> findDayById(Long id) throws SQLException {
+    public Optional<Image> findBurgerById(Long id) throws SQLException {
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_BURGER_ID);
         statement.setLong(1, id);
@@ -91,7 +91,7 @@ public class ImageRepositoryJdbcImpl implements ImageRepository {
                     .originalFileName(resultSet.getString("originalfilename"))
                     .storageFileName(resultSet.getString("storagefilename"))
                     .type(resultSet.getString("type"))
-                    .burgerId(resultSet.getLong("burgerid"))
+                    .burgerid(resultSet.getLong("burgerid"))
                     .size(resultSet.getLong("size"))
                     .build());
         }
@@ -112,7 +112,7 @@ public class ImageRepositoryJdbcImpl implements ImageRepository {
                     .originalFileName(resultSet.getString("originalfilename"))
                     .storageFileName(resultSet.getString("storagefilename"))
                     .type(resultSet.getString("type"))
-                    .burgerId(resultSet.getLong("burgerid"))
+                    .burgerid(resultSet.getLong("burgerid"))
                     .size(resultSet.getLong("size"))
                     .build());
         }

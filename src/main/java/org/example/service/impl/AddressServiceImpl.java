@@ -16,8 +16,13 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressDto getAddressById(Long id) throws SQLException {
-        Optional<Address> OptionalAddress = addressRepository.findById(id);
+    public AddressDto getAddressById(Long id)  {
+        Optional<Address> OptionalAddress = null;
+        try {
+            OptionalAddress = addressRepository.findById(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         if (OptionalAddress.isPresent()) {
             Address address = OptionalAddress.get();
             return AddressDto.builder()
