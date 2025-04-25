@@ -1,43 +1,101 @@
-.cart-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+/* Стили для контейнера карточек товаров */
+.cart_container {
+    display: flex; /* Используем flexbox для выравнивания элементов */
+    flex-direction: column; /* Элементы располагаются вертикально */
+    gap: 20px; /* Расстояние между элементами cart_item */
 }
 
-.cart-table th,
-.cart-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-}
-
-.cart-table th {
-    background-color: #f4f4f9;
-    font-weight: bold;
-}
-
-.cart-total {
-    margin-top: 20px;
-    text-align: right;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.cart-actions {
+.cart_item {
+    background-color: #fff;
+    border: 1px solid #ddd;
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    gap: 20px; /* Расстояние между элементами внутри карточки */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.cart-actions a {
+.cart_item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.post-image img {
+    max-width: 150px; /* Размер изображения */
+    height: auto;
+    border-radius: 8px;
+}
+
+.info-block {
+    flex: 1; /* Блок занимает большую часть пространства */
+    display: flex;
+    flex-direction: column; /* Элементы внутри блока располагаются вертикально */
+    justify-content: center; /* Выравнивание по центру по вертикали */
+    gap: 5px; /* Расстояние между параграфами */
+    align-items: center;
+}
+
+.info-block p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.info-block p:nth-of-type(1) {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+.info-block p:nth-of-type(3) {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.info-block p:nth-of-type(4) {
+    font-weight: bold;
+    color: #27ae60;
+}
+
+/* Стили для кнопки "Delete burger!" */
+button[name="action"] {
     padding: 10px 20px;
-    background-color: #d32f2f;
+    background-color: #e74c3c;
     color: #fff;
-    text-decoration: none;
+    font-size: 16px;
+    border: none;
     border-radius: 4px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.cart-actions a:hover {
-    background-color: #b71c1c;
+button[name="action"]:hover {
+    background-color: #c0392b;
+}
+
+button[name="action"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Стили для кнопки "Order" */
+form[action="/cart"] {
+    display: flex;
+    justify-content: center; /* Кнопка по центру */
+    margin-top: 20px;
+}
+
+button[value="Order"] {
+    padding: 15px 30px;
+    background-color: #27ae60;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[value="Order"]:hover {
+    background-color: #219a55;
 }

@@ -18,7 +18,7 @@ public class BurgerRepositoryJdbcImpl implements BurgerRepository {
     }
 
     @Override
-    public Optional<Burger> findById(Long id) throws SQLException {
+    public Optional<Burger> findById(Long id)  {
         String sql = "SELECT * FROM burger WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -28,12 +28,14 @@ public class BurgerRepositoryJdbcImpl implements BurgerRepository {
                     return Optional.of(mapRowToBurger(resultSet));
                 }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return Optional.empty();
     }
 
     @Override
-    public List<Burger> findAll() throws SQLException {
+    public List<Burger> findAll() {
         List<Burger> burgers = new ArrayList<>();
         String sql = "SELECT * FROM burger";
         try (Connection connection = dataSource.getConnection();
@@ -42,27 +44,33 @@ public class BurgerRepositoryJdbcImpl implements BurgerRepository {
             while (resultSet.next()) {
                 burgers.add(mapRowToBurger(resultSet));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return burgers;
     }
 
     @Override
-    public Optional<Burger> findByName(String name) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        String sql = "SELECT * FROM burger WHERE name = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, name);
+    public Optional<Burger> findByName(String name) {
+        try (Connection connection = dataSource.getConnection()){
+            String sql = "SELECT * FROM burger WHERE name = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
 
-        ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
-            return Optional.of(mapRowToBurger(resultSet));
+            if (resultSet.next()) {
+                return Optional.of(mapRowToBurger(resultSet));
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return Optional.empty();
+
     }
 
     @Override
-    public void save(Burger burger) throws SQLException {
+    public void save(Burger burger) {
         String sql = "INSERT INTO burger (name, price, description) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -70,11 +78,13 @@ public class BurgerRepositoryJdbcImpl implements BurgerRepository {
             statement.setInt(2, burger.getPrice());
             statement.setString(3, burger.getDescription());
             statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void update(Burger burger) throws SQLException {
+    public void update(Burger burger) {
         String sql = "UPDATE burger SET name = ?, price = ?, description = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -83,17 +93,21 @@ public class BurgerRepositoryJdbcImpl implements BurgerRepository {
             statement.setString(3, burger.getDescription());
             statement.setLong(4, burger.getId());
             statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
 
     @Override
-    public void remove(Long id) throws SQLException {
+    public void remove(Long id) {
         String sql = "DELETE FROM burger WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

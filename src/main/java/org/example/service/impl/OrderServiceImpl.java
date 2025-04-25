@@ -17,7 +17,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void save(OrderDto orderDto) throws SQLException {
+    public void save(OrderDto orderDto) {
         Order order = Order.builder()
                 .userId(orderDto.getUserId())
                 .burgerid(orderDto.getBurgerid())
@@ -27,12 +27,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(Long orderId) throws SQLException {
+    public void delete(Long orderId) {
         orderRepository.remove(orderId);
     }
 
     @Override
-    public List<OrderDto> findOrdersByUserId(Long userId) throws SQLException {
+    public List<OrderDto> findOrdersByUserId(Long userId){
         List<OrderDto> orderDtos = new ArrayList<>();
         List<Order> orders = orderRepository.findByUser(userId);
         for (Order order : orders) {
@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void update(OrderDto orderDto) throws SQLException {
+    public void update(OrderDto orderDto)  {
         Order order = Order.builder()
                 .userId(orderDto.getUserId())
                 .burgerid(orderDto.getBurgerid())

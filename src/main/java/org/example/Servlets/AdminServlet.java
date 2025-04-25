@@ -1,12 +1,10 @@
 package org.example.Servlets;
 
 
-import org.example.Models.Burger;
 import org.example.dto.BurgerDto;
 import org.example.dto.BurgerWithImage;
 import org.example.service.BurgerService;
 import org.example.service.ImageService;
-import org.example.service.impl.BurgerServiceImpl;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +36,7 @@ public class AdminServlet extends HttpServlet {
         List<BurgerDto> burgerDtos = burgerService.findAll();
         List<BurgerWithImage> burgerWithImages = new ArrayList<>();
         for (BurgerDto burgerDto : burgerDtos) {
-            System.out.println(burgerDto);
-            try {
-                burgerWithImages.add(new BurgerWithImage(burgerDto, imageService.getImageByBurger(burgerDto.getId())));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            burgerWithImages.add(new BurgerWithImage(burgerDto, imageService.getImageByBurger(burgerDto.getId())));
         }
         req.setAttribute("burgerWithImages", burgerWithImages);
         req.getRequestDispatcher("jsp/admin.jsp").forward(req, resp);
@@ -58,17 +50,13 @@ public class AdminServlet extends HttpServlet {
         int price = Integer.parseInt(req.getParameter("price"));
 
         Part part = req.getPart("image");
-        try {
-            burgerService.save(BurgerDto.builder()
-                    .name(name)
-                    .description(description)
-                    .price(price)
-                    .build());
-            BurgerDto burgerDto = burgerService.findByName(name);
-            imageService.saveFileToStorage(part.getInputStream(), part.getSubmittedFileName(), part.getContentType(), burgerDto.getId(), part.getSize());
-            resp.sendRedirect("/admin");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        burgerService.save(BurgerDto.builder()
+                .name(name)
+                .description(description)
+                .price(price)
+                .build());
+        BurgerDto burgerDto = burgerService.findByName(name);
+        imageService.saveFileToStorage(part.getInputStream(), part.getSubmittedFileName(), part.getContentType(), burgerDto.getId(), part.getSize());
+        resp.sendRedirect("/admin");
     }
 }

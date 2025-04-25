@@ -67,12 +67,8 @@ public class SignUpServlet extends HttpServlet {
                 .flat(Long.valueOf(req.getParameter("flat")))
                 .build();
 
-
-        try {
-            signUpService.signUp(signUpForm);
-            resp.sendRedirect("/signIn?success=registrationComplete");
-        } catch (SQLException e) {
-            throw new ServletException("Ошибка при регистрации пользователя.", e);
-        }
+        
+        signUpService.signUp(signUpForm);
+        resp.sendRedirect("/signIn?success=registrationComplete");
     }
 }

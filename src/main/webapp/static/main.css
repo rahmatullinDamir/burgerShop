@@ -4,7 +4,6 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     min-height: calc(100vh - 150px);
 }
 
@@ -16,7 +15,13 @@
     padding: 20px;
     justify-content: center;
 }
-
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
 .item > div {
     background-color: #fff;
     border-radius: 8px;
@@ -85,6 +90,30 @@ button:hover {
 
 button:active {
     background-color: #9a0000;
+}
+/* Стили для поля ввода количества */
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus {
+    border-color: red;
+    outline: none;
 }
 /* Стили для поля ввода количества */
 label {

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public interface SignInService {
 
-    UserDto signIn(SignInForm signInForm) throws SQLException;
+    UserDto signIn(SignInForm signInForm);
 
-    Boolean checkPassword(String rawPassword, String encodedPassword) throws SQLException;
+    Boolean checkPassword(String rawPassword, String encodedPassword);
 }

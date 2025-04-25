@@ -5,7 +5,6 @@ import org.example.dto.AddressDto;
 import org.example.repositories.AddressRepository;
 import org.example.service.AddressService;
 
-import java.sql.SQLException;
 import java.util.Optional;
 
 public class AddressServiceImpl implements AddressService {
@@ -18,11 +17,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDto getAddressById(Long id)  {
         Optional<Address> OptionalAddress = null;
-        try {
-            OptionalAddress = addressRepository.findById(id);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        OptionalAddress = addressRepository.findById(id);
         if (OptionalAddress.isPresent()) {
             Address address = OptionalAddress.get();
             return AddressDto.builder()
@@ -44,11 +39,7 @@ public class AddressServiceImpl implements AddressService {
                 .house(addressDto.getHouse())
                 .flat(addressDto.getFlat())
                 .build();
-        try {
-            addressRepository.update(address);
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        addressRepository.update(address);
 
     }
 

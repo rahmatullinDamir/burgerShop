@@ -26,89 +26,103 @@ public class UserRepositoryJdbcImpl implements UserRepository {
     }
 
 
-
     @Override
-    public Optional<User> findById(Long id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_USERS_BY_ID);
-        statement.setLong(1, id);
+    public Optional<User> findById(Long id) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_USERS_BY_ID);
+            statement.setLong(1, id);
 
-        ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(new User(resultSet.getLong("id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role"),
+                        resultSet.getLong("addressid")));
+            }
 
-
-        if (resultSet.next()) {
-            return Optional.of(new User(resultSet.getLong("id"),
-                    resultSet.getString("username"),
-                    resultSet.getString("password"),
-                    resultSet.getString("role"),
-                    resultSet.getLong("addressid")));
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        return Optional.empty();
     }
 
     @Override
-    public List<User> findAll() throws SQLException {
-        Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
+    public List<User> findAll() {
+        try (Connection connection = dataSource.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
 
-        List<User> result = new ArrayList<>();
+            List<User> result = new ArrayList<>();
 
-        while (resultSet.next()) {
-            User user = new User(resultSet.getLong("id"),
-                    resultSet.getString("username"),
-                    resultSet.getString("password"),
-                    resultSet.getString("role"),
-                    resultSet.getLong("addressid"));
-            result.add(user);
+            while (resultSet.next()) {
+                User user = new User(resultSet.getLong("id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role"),
+                        resultSet.getLong("addressid"));
+                result.add(user);
+            }
+
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        return result;
     }
 
 
     @Override
-    public void save(User entity) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_USER);
-        statement.setString(1, entity.getUsername());
-        statement.setString(2, entity.getPassword());
-        statement.setLong(3, entity.getAddressid());
-        statement.executeUpdate();
-    }
-
-    @Override
-    public void update(User entity) throws SQLException {
-
-    }
-
-
-    @Override
-    public void remove(Long id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_USER);
-        statement.setLong(1, id);
-        statement.executeUpdate();
-    }
-
-    @Override
-    public Optional<User> findByUsername(String username) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_USERNAME);
-        statement.setString(1, username);
-
-        ResultSet resultSet = statement.executeQuery();
-
-        if (resultSet.next()) {
-            return Optional.of(new User(resultSet.getLong("id"),
-                    resultSet.getString("username"),
-                    resultSet.getString("password"),
-                    resultSet.getString("role"),
-                    resultSet.getLong("addressid")));
+    public void save(User entity) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_USER);
+            statement.setString(1, entity.getUsername());
+            statement.setString(2, entity.getPassword());
+            statement.setLong(3, entity.getAddressid());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        return Optional.empty();
-
     }
+
+    @Override
+    public void update(User entity) {}
+
+
+    @Override
+    public void remove(Long id)  {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_USER);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_USERNAME);
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return Optional.of(new User(resultSet.getLong("id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role"),
+                        resultSet.getLong("addressid")));
+            }
+
+            return Optional.empty();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

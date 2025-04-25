@@ -8,51 +8,27 @@
 <%@ include file="header.jsp" %>
 
 <h1>Your Cart</h1>
-<c:choose>
-    <c:when test="${empty burgersInCart}">
-        <p>Your cart is empty.</p>
-    </c:when>
-    <c:otherwise>
-        <table class="cart-table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="burger" items="${burgersInCart}">
-                <tr>
-                    <td>${burger.name}</td>
-                    <td>${burger.price} ₽</td>
-                    <td>${burger.quantity}</td>
-                    <td>${burger.price * burger.quantity} ₽</td>
-                    <td>
-                        <form method="post" action="${pageContext.request.contextPath}/cart">
-                            <input type="hidden" name="burgerId" value="${burger.id}">
-                            <input type="hidden" name="action" value="remove">
-                            <button type="submit">Remove</button>
-                        </form>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-
-        <div class="cart-total">
-            <strong>Total:</strong>
-            <span>
-                    ${burgersInCart.stream().mapToInt(burger -> burger.price * burger.quantity).sum()} ₽
-            </span>
-        </div>
-    </c:otherwise>
-</c:choose>
-
-<div class="cart-actions">
-    <a href="${pageContext.request.contextPath}/">Continue Shopping</a>
-    <a href="${pageContext.request.contextPath}/checkout">Checkout</a>
+<div class="cart_container">
+    <c:forEach items="${cardDtos}" var="card">
+        <form action="/cart" method="POST" class="cart_item">
+            <input type="hidden" value="${card.orderId}" name="orderId">
+            <div class="post-image">
+                <img src="${pageContext.request.contextPath}/uploaded/files?id=${card.burger.image.id}"
+                     alt="Burger Image">
+            </div>
+            <div class="info-block">
+                <p>Burger Name: ${card.burger.burger.name}</p>
+                <p>Burger Description: ${card.burger.burger.description}</p>
+                <p>Burger Price: ${card.burger.burger.price} rub</p>
+                <p>Quantity of Burger: ${card.quantity}</p>
+            </div>
+            <button name="action" value="Delete">Delete burger!</button>
+        </form>
+    </c:forEach>
 </div>
+
+<form action="/cart" method="POST">
+    <button name="action" value="Order">Order</button>
+</form>
+
 <%@ include file="footer.jsp" %>

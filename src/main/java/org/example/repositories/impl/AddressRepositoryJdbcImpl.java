@@ -24,86 +24,109 @@ public class AddressRepositoryJdbcImpl implements AddressRepository {
     }
 
     @Override
-    public Optional<Address> findById(Long id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_ADDRESS_BY_ID);
-        statement.setLong(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            return Optional.of(Address.builder()
-                    .id(resultSet.getLong("id"))
-                    .street(resultSet.getString("street"))
-                    .city(resultSet.getString("city"))
-                    .house(resultSet.getLong("house"))
-                    .flat(resultSet.getLong("flat"))
-                    .build());
+    public Optional<Address> findById(Long id) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_ADDRESS_BY_ID);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(Address.builder()
+                        .id(resultSet.getLong("id"))
+                        .street(resultSet.getString("street"))
+                        .city(resultSet.getString("city"))
+                        .house(resultSet.getLong("house"))
+                        .flat(resultSet.getLong("flat"))
+                        .build());
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return Optional.empty();
     }
 
     @Override
-    public List<Address> findAll() throws SQLException {
-        Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
+    public List<Address> findAll() {
+        try (Connection connection = dataSource.getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
 
-        List<Address> addresses = new ArrayList<>();
+            List<Address> addresses = new ArrayList<>();
 
-        while (resultSet.next()) {
-            addresses.add(Address.builder()
-                    .id(resultSet.getLong("id"))
-                    .street(resultSet.getString("street"))
-                    .city(resultSet.getString("city"))
-                    .house(resultSet.getLong("house"))
-                    .flat(resultSet.getLong("flat"))
-                    .build());
+            while (resultSet.next()) {
+                addresses.add(Address.builder()
+                        .id(resultSet.getLong("id"))
+                        .street(resultSet.getString("street"))
+                        .city(resultSet.getString("city"))
+                        .house(resultSet.getLong("house"))
+                        .flat(resultSet.getLong("flat"))
+                        .build());
+            }
+            return addresses;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return addresses;
+
     }
 
     @Override
-    public void save(Address entity) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_ADDRESS);
-        statement.setString(1, entity.getStreet());
-        statement.setString(2, entity.getCity());
-        statement.setLong(3, entity.getHouse());
-        statement.setLong(4, entity.getFlat());
-        statement.execute();
-    }
-
-    @Override
-    public void update(Address entity) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ADDRESS);
-        statement.setString(1, entity.getStreet());
-        statement.setString(2, entity.getCity());
-        statement.setLong(3, entity.getHouse());
-        statement.setLong(4, entity.getFlat());
-        statement.setLong(5, entity.getId());
-        statement.executeUpdate();
-    }
-
-    @Override
-    public void remove(Long id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ADDRESS);
-        statement.setLong(1, id);
-        statement.executeUpdate();
-    }
-
-    @Override
-    public Long findIdByAddress(Address address) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID_BY_ADDRESS);
-        statement.setString(1, address.getStreet());
-        statement.setString(2, address.getCity());
-        statement.setLong(3, address.getHouse());
-        statement.setLong(4, address.getFlat());
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            return resultSet.getLong(1);
+    public void save(Address entity) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_ADDRESS);
+            statement.setString(1, entity.getStreet());
+            statement.setString(2, entity.getCity());
+            statement.setLong(3, entity.getHouse());
+            statement.setLong(4, entity.getFlat());
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
+
+    }
+
+    @Override
+    public void update(Address entity) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ADDRESS);
+            statement.setString(1, entity.getStreet());
+            statement.setString(2, entity.getCity());
+            statement.setLong(3, entity.getHouse());
+            statement.setLong(4, entity.getFlat());
+            statement.setLong(5, entity.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void remove(Long id) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ADDRESS);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public Long findIdByAddress(Address address) {
+        try(Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ID_BY_ADDRESS);
+            statement.setString(1, address.getStreet());
+            statement.setString(2, address.getCity());
+            statement.setLong(3, address.getHouse());
+            statement.setLong(4, address.getFlat());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

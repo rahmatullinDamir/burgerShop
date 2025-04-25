@@ -19,19 +19,15 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public UserDto getUserById(Long id) {
-        try {
-            Optional<User> optionalUser = userRepository.findById(id);
-            if (optionalUser.isPresent()) {
-                User user = optionalUser.get();
-                return UserDto.builder()
-                        .id(user.getId())
-                        .username(user.getUsername())
-                        .build();
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return UserDto.builder()
+                    .id(user.getId())
+                    .username(user.getUsername())
+                    .build();
         }
+        return null;
 
     }
 
@@ -41,10 +37,6 @@ public class ProfileServiceImpl implements ProfileService {
                 .id(userDto.getId())
                 .username(userDto.getUsername())
                 .build();
-        try {
-            userRepository.update(user);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        userRepository.update(user);
     }
 }

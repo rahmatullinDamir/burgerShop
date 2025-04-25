@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class CardDto {
     Long orderId;
     Long quantity;
-    BurgerDto burger;
+    BurgerWithImage burger;
 }

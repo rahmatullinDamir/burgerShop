@@ -24,85 +24,108 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     }
 
     @Override
-    public List<Order> findByUser(Long id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_ORDER_BY_USER);
-        statement.setLong(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        List<Order> Orders = new ArrayList<>();
-        while (resultSet.next()) {
-            Orders.add(new Order(  resultSet.getLong("id"),
-                    resultSet.getLong("userid"),
-                    resultSet.getLong("burgerid"),
-                    resultSet.getLong("quantity")));
+    public List<Order> findByUser(Long id) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_ORDER_BY_USER);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            List<Order> Orders = new ArrayList<>();
+            while (resultSet.next()) {
+                Orders.add(new Order(  resultSet.getLong("id"),
+                        resultSet.getLong("userid"),
+                        resultSet.getLong("burgerid"),
+                        resultSet.getLong("quantity")));
+            }
+            return Orders;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return Orders;
+
     }
 
 
     @Override
-    public List<Order> findAll() throws SQLException {
-        Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
+    public List<Order> findAll()  {
+        try(Connection connection = dataSource.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
 
 
-        List<Order> Orders = new ArrayList<>();
+            List<Order> Orders = new ArrayList<>();
 
-        while (resultSet.next()) {
-            Order Order = new Order(  resultSet.getLong("id"),
-                    resultSet.getLong("userid"),
-                    resultSet.getLong("burgerid"),
-                    resultSet.getLong("quantity"));
-            Orders.add(Order);
+            while (resultSet.next()) {
+                Order Order = new Order(  resultSet.getLong("id"),
+                        resultSet.getLong("userid"),
+                        resultSet.getLong("burgerid"),
+                        resultSet.getLong("quantity"));
+                Orders.add(Order);
+            }
+            return Orders;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return Orders;
+
     }
 
     @Override
-    public Optional<Order> findById(Long id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_ORDER_BY_ID);
-        statement.setLong(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            return Optional.of(new Order(
-                    resultSet.getLong("id"),
-                    resultSet.getLong("userid"),
-                    resultSet.getLong("burgerid"),
-                    resultSet.getLong("quantity")));
+    public Optional<Order> findById(Long id) {
+        try(Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_ORDER_BY_ID);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(new Order(
+                        resultSet.getLong("id"),
+                        resultSet.getLong("userid"),
+                        resultSet.getLong("burgerid"),
+                        resultSet.getLong("quantity")));
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return Optional.empty();
+
     }
 
     @Override
-    public void save(Order entity) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_ORDER);
-        statement.setLong(1, entity.getUserId());
-        statement.setLong(2, entity.getBurgerid());
-        statement.setLong(3, entity.getQuantity());
-        statement.execute();
+    public void save(Order entity)  {
+        try(Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT_NEW_ORDER);
+            statement.setLong(1, entity.getUserId());
+            statement.setLong(2, entity.getBurgerid());
+            statement.setLong(3, entity.getQuantity());
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
-    public void update(Order entity) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER);
-        statement.setLong(1, entity.getUserId());
-        statement.setLong(2, entity.getBurgerid());
-        statement.setLong(3, entity.getQuantity());
-        statement.setLong(4, entity.getId());
-        statement.executeUpdate();
+    public void update(Order entity) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ORDER);
+            statement.setLong(1, entity.getUserId());
+            statement.setLong(2, entity.getBurgerid());
+            statement.setLong(3, entity.getQuantity());
+            statement.setLong(4, entity.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
     @Override
-    public void remove(Long id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ORDER);
-        statement.setLong(1, id);
-        statement.executeUpdate();
+    public void remove(Long id) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ORDER);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 

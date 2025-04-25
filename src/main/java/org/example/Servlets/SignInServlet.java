@@ -38,25 +38,22 @@ public class SignInServlet extends HttpServlet {
         String password = req.getParameter("password");
 
 
-
         SignInForm signInForm = SignInForm.builder()
                 .username(username)
                 .password(password)
                 .build();
-        try {
-            UserDto userDto = signInService.signIn(signInForm);
-            if (userDto != null) {
-                HttpSession session = req.getSession(true);
-                session.setAttribute("authentication", true);
-                session.setAttribute("id", userDto.getId());
-                session.setAttribute("username", userDto.getUsername());
-                session.setAttribute("role", userDto.getRole());
-                resp.sendRedirect("/");
-            } else {
-                resp.sendRedirect("/signIn?error=invalidCredentials");
-            }
-        } catch (SQLException e) {
-            throw new ServletException("Database error during sign in.", e);
+
+        UserDto userDto = signInService.signIn(signInForm);
+        if (userDto != null) {
+            HttpSession session = req.getSession(true);
+            session.setAttribute("authentication", true);
+            session.setAttribute("id", userDto.getId());
+            session.setAttribute("username", userDto.getUsername());
+            session.setAttribute("role", userDto.getRole());
+            resp.sendRedirect("/");
+        } else {
+            resp.sendRedirect("/signIn?error=invalidCredentials");
         }
+
     }
 }

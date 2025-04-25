@@ -6,6 +6,6 @@ import java.sql.SQLException;
 
 public interface SignUpService {
 
-    void signUp(SignUpForm signUpForm) throws SQLException;
+    void signUp(SignUpForm signUpForm);
     boolean isUsernameExist(String username);
 }

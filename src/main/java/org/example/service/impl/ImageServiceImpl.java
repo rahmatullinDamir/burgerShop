@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,9 +36,8 @@ public class ImageServiceImpl implements ImageService {
             imageRepository.save(image);
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+
     }
 
     @Override
@@ -52,26 +50,22 @@ public class ImageServiceImpl implements ImageService {
                 File file = new File("C://Users//kim85//IdeaProjects//orisSemestr//src//main//webapp//image/" + image.getStorageFileName() + "." + image.getType().split("/")[1]);
                 Files.copy(file.toPath(), outputStream);
             }
-        } catch (SQLException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public Image getFileInfo(Long fileId) {
-        try {
-            Optional<Image> imageOptional = imageRepository.findById(fileId);
-            if (imageOptional.isPresent()) {
-                return imageOptional.get();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        Optional<Image> imageOptional = imageRepository.findById(fileId);
+        if (imageOptional.isPresent()) {
+            return imageOptional.get();
         }
         return null;
     }
 
     @Override
-    public void deleteImage(Long fileId) throws SQLException, IOException {
+    public void deleteImage(Long fileId) throws IOException {
         Optional<Image> imageOptional = imageRepository.findById(fileId);
         if (imageOptional.isPresent()) {
             Image image = imageOptional.get();
@@ -83,7 +77,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image getImageByBurger(Long burgerid) throws SQLException {
+    public Image getImageByBurger(Long burgerid) {
         Optional<Image> imageOptional = imageRepository.findBurgerById(burgerid);
         if (imageOptional.isPresent()) {
             return imageOptional.get();
@@ -92,7 +86,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image getImageByParam(String originalName, Long burgerid, Long size) throws SQLException {
+    public Image getImageByParam(String originalName, Long burgerid, Long size) {
         Optional<Image> imageOptional = imageRepository.findIdByImage(originalName, burgerid, size);
         if (imageOptional.isPresent()) {
             return imageOptional.get();

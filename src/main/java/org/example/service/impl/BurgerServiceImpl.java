@@ -22,27 +22,25 @@ public class BurgerServiceImpl implements BurgerService {
     @Override
     public List<BurgerDto> findAll() {
         List<BurgerDto> burgerDtos = new ArrayList<>();
-        try {
-            List<Burger> burgers = burgerRepository.findAll();
-            for (Burger burger : burgers) {
-                burgerDtos.add(BurgerDto.builder()
-                        .id(burger.getId())
-                        .price(burger.getPrice())
-                        .name(burger.getName())
-                        .description(burger.getDescription())
-                        .build());
-            }
-        } catch (SQLException exception) {
-            System.out.println(exception);
+        List<Burger> burgers = burgerRepository.findAll();
+        for (Burger burger : burgers) {
+            burgerDtos.add(BurgerDto.builder()
+                    .id(burger.getId())
+                    .price(burger.getPrice())
+                    .name(burger.getName())
+                    .description(burger.getDescription())
+                    .build());
         }
+
         return burgerDtos;
     }
 
     @Override
-    public BurgerDto findById(Long id) throws SQLException {
+    public BurgerDto findById(Long id) {
         Optional<Burger> burger = burgerRepository.findById(id);
         if (burger.isPresent()) {
             return BurgerDto.builder()
+                    .id(burger.get().getId())
                     .description(burger.get().getDescription())
                     .price(burger.get().getPrice())
                     .name(burger.get().getName())
@@ -53,12 +51,12 @@ public class BurgerServiceImpl implements BurgerService {
 
 
     @Override
-    public void deleteById(Long id) throws SQLException {
+    public void deleteById(Long id){
         burgerRepository.remove(id);
     }
 
     @Override
-    public void save(BurgerDto burgerDto) throws SQLException {
+    public void save(BurgerDto burgerDto) {
         Burger burger = Burger.builder()
                 .name(burgerDto.getName())
                 .description(burgerDto.getDescription())
@@ -68,7 +66,7 @@ public class BurgerServiceImpl implements BurgerService {
     }
 
     @Override
-    public BurgerDto findByName(String name) throws SQLException {
+    public BurgerDto findByName(String name)  {
         Optional<Burger> optionalBurger = burgerRepository.findByName(name);
         if (optionalBurger.isPresent()) {
             Burger burger = optionalBurger.get();

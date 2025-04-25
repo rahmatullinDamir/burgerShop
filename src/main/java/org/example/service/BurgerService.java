@@ -9,11 +9,11 @@ import java.util.List;
 public interface BurgerService {
     List<BurgerDto> findAll();
 
-    BurgerDto findById(Long id) throws SQLException;
+    BurgerDto findById(Long id);
 
-    void deleteById(Long id) throws SQLException;
+    void deleteById(Long id);
 
-    void save(BurgerDto burgerDto) throws SQLException;
+    void save(BurgerDto burgerDto);
 
-    BurgerDto findByName(String name) throws SQLException;
+    BurgerDto findByName(String name);
 }

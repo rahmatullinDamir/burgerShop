@@ -24,7 +24,7 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     @Override
-    public void signUp(SignUpForm signUpForm) throws SQLException {
+    public void signUp(SignUpForm signUpForm) {
 
         Address address = Address.builder()
                 .street(signUpForm.getStreet())
@@ -46,10 +46,6 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public boolean isUsernameExist(String username) {
-        try {
-            return userRepository.findByUsername(username).isPresent();
-        } catch (SQLException e){
-            return false;
-        }
+        return userRepository.findByUsername(username).isPresent();
     }
 }

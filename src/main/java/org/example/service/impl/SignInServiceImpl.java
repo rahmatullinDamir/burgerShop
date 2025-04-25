@@ -24,9 +24,8 @@ public class SignInServiceImpl implements SignInService {
 
 
     @Override
-    public UserDto signIn(SignInForm signInForm) throws SQLException {
+    public UserDto signIn(SignInForm signInForm) {
         Optional<User> userOptional = userRepository.findByUsername(signInForm.getUsername());
-        System.out.println(userOptional.isPresent());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (checkPassword(signInForm.getPassword(), user.getPassword())) {
@@ -41,7 +40,7 @@ public class SignInServiceImpl implements SignInService {
     }
 
     @Override
-    public Boolean checkPassword(String rawPassword, String encodedPassword) throws SQLException {
+    public Boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 }

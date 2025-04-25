@@ -1,17 +1,16 @@
 package org.example.repositories;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public interface CrudRepository<T> {
-    Optional<T> findById(Long id) throws SQLException;
+    Optional<T> findById(Long id);
 
-    List<T> findAll() throws SQLException;
+    List<T> findAll();
 
-    void save(T entity) throws SQLException;
+    void save(T entity);
 
-    void update(T entity) throws SQLException;
+    void update(T entity);
 
-    void remove(Long id) throws SQLException;
+    void remove(Long id);
 }

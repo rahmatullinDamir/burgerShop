@@ -45,14 +45,14 @@ public class ImageRepositoryJdbcImpl implements ImageRepository {
                     .build();
 
     @Override
-    public Optional<Image> findById(Long id) throws SQLException {
+    public Optional<Image> findById(Long id) {
         Image image = jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, fileRowMapper, id);
         return Optional.of(image);
 
     }
 
     @Override
-    public List<Image> findAll() throws SQLException {
+    public List<Image> findAll() {
         return null;
     }
 
@@ -65,58 +65,70 @@ public class ImageRepositoryJdbcImpl implements ImageRepository {
     }
 
     @Override
-    public void update(Image entity) throws SQLException {
+    public void update(Image entity) {
 
     }
 
 
     @Override
-    public void remove(Long id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_DELETE);
-        statement.setLong(1, id);
-        statement.executeUpdate();
-    }
-
-
-    @Override
-    public Optional<Image> findBurgerById(Long id) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_BURGER_ID);
-        statement.setLong(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            return Optional.of(Image.builder()
-                    .id(resultSet.getLong("id"))
-                    .originalFileName(resultSet.getString("originalfilename"))
-                    .storageFileName(resultSet.getString("storagefilename"))
-                    .type(resultSet.getString("type"))
-                    .burgerid(resultSet.getLong("burgerid"))
-                    .size(resultSet.getLong("size"))
-                    .build());
+    public void remove(Long id) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_DELETE);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return Optional.empty();
+
+    }
+
+
+    @Override
+    public Optional<Image> findBurgerById(Long id) {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_BURGER_ID);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(Image.builder()
+                        .id(resultSet.getLong("id"))
+                        .originalFileName(resultSet.getString("originalfilename"))
+                        .storageFileName(resultSet.getString("storagefilename"))
+                        .type(resultSet.getString("type"))
+                        .burgerid(resultSet.getLong("burgerid"))
+                        .size(resultSet.getLong("size"))
+                        .build());
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
-    public Optional<Image> findIdByImage(String originalName, Long dayId, Long size) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_PARAM_);
-        statement.setString(1, originalName);
-        statement.setLong(2, dayId);
-        statement.setLong(3, size);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            return Optional.of(Image.builder()
-                    .id(resultSet.getLong("id"))
-                    .originalFileName(resultSet.getString("originalfilename"))
-                    .storageFileName(resultSet.getString("storagefilename"))
-                    .type(resultSet.getString("type"))
-                    .burgerid(resultSet.getLong("burgerid"))
-                    .size(resultSet.getLong("size"))
-                    .build());
+    public Optional<Image> findIdByImage(String originalName, Long dayId, Long size)  {
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_PARAM_);
+            statement.setString(1, originalName);
+            statement.setLong(2, dayId);
+            statement.setLong(3, size);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(Image.builder()
+                        .id(resultSet.getLong("id"))
+                        .originalFileName(resultSet.getString("originalfilename"))
+                        .storageFileName(resultSet.getString("storagefilename"))
+                        .type(resultSet.getString("type"))
+                        .burgerid(resultSet.getLong("burgerid"))
+                        .size(resultSet.getLong("size"))
+                        .build());
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return Optional.empty();
+
     }
 
 

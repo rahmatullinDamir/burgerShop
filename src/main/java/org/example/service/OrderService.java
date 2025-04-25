@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface OrderService {
-    void save(OrderDto orderDto) throws SQLException;
-    void delete(Long orderId) throws SQLException;
-    List<OrderDto> findOrdersByUserId(Long userId) throws SQLException;
-    void update(OrderDto orderDto) throws SQLException;
+    void save(OrderDto orderDto);
+    void delete(Long orderId) ;
+    List<OrderDto> findOrdersByUserId(Long userId);
+    void update(OrderDto orderDto);
 }

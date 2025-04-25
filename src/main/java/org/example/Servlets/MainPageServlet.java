@@ -18,16 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/")
 public class MainPageServlet extends HttpServlet {
-    private  BurgerService burgerService;
+    private BurgerService burgerService;
     private ImageService imageService;
 
     private OrderService orderService;
+
     @Override
     public void init() throws ServletException {
         burgerService = (BurgerService) getServletContext().getAttribute("burgerService");
@@ -40,14 +40,11 @@ public class MainPageServlet extends HttpServlet {
         List<BurgerDto> burgersDto = burgerService.findAll();
         List<BurgerWithImage> burgerWithImages = new ArrayList<>();
         for (BurgerDto burgerDto : burgersDto) {
-            try {
-                burgerWithImages.add(new BurgerWithImage(burgerDto, imageService.getImageByBurger(burgerDto.getId())));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+
+            burgerWithImages.add(new BurgerWithImage(burgerDto, imageService.getImageByBurger(burgerDto.getId())));
+
 
         }
-        System.out.println(burgerWithImages);
         req.setAttribute("burgerWithImages", burgerWithImages);
         req.getRequestDispatcher("/jsp/mainPage.jsp").forward(req, resp);
     }
@@ -67,7 +64,6 @@ public class MainPageServlet extends HttpServlet {
             long burgerId = jsonObject.getLong("burgerId");
             int quantity = jsonObject.getInt("quantity");
 
-            System.out.println("Received burgerId: " + burgerId + ", quantity: " + quantity);
 
             orderService.save(OrderDto.builder()
                     .burgerid(burgerId)
@@ -81,8 +77,7 @@ public class MainPageServlet extends HttpServlet {
         } catch (JSONException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             resp.getWriter().write("{\"status\":\"error\",\"message\":\"Invalid JSON\"}");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
         }
     }
 }
