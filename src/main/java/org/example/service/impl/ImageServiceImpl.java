@@ -23,12 +23,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void saveFileToStorage(InputStream file, String originalFileName, String contentType, Long burgerId, Long size) {
+    public void saveFileToStorage(InputStream file, String originalFileName, String contentType, Long burgerid, Long size) {
         Image image = Image.builder()
                 .originalFileName(originalFileName)
                 .storageFileName(UUID.randomUUID().toString())
                 .size(size)
-                .burgerId(burgerId)
+                .burgerid(burgerid)
                 .type(contentType)
                 .build();
 
@@ -83,8 +83,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image getImageByDay(Long dayId) throws SQLException {
-        Optional<Image> imageOptional = imageRepository.findDayById(dayId);
+    public Image getImageByBurger(Long burgerid) throws SQLException {
+        Optional<Image> imageOptional = imageRepository.findBurgerById(burgerid);
         if (imageOptional.isPresent()) {
             return imageOptional.get();
         }
@@ -92,8 +92,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image getImageByParam(String originalName, Long dayId, Long size) throws SQLException {
-        Optional<Image> imageOptional = imageRepository.findIdByImage(originalName, dayId, size);
+    public Image getImageByParam(String originalName, Long burgerid, Long size) throws SQLException {
+        Optional<Image> imageOptional = imageRepository.findIdByImage(originalName, burgerid, size);
         if (imageOptional.isPresent()) {
             return imageOptional.get();
         }

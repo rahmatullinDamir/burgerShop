@@ -5,23 +5,24 @@
   Time: 15:56
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Main</title>
-    <link rel="stylesheet" href="/static/styles.css">
-    <link rel="stylesheet" href="/static/global.css">
-</head>
-<body>
+
+<%@include file="header.jsp"%>
+
 <div class="container">
-    <div class="item">Header</div>
-    <div class="item">Content</div>
-    <div class="item">Footer</div>
+    <div class="item">
+       <c:forEach items="${burgers}" var="burger">
+           <p>${burger.name}</p>
+           <p>${burger.description}</p>
+           <p>${burger.price}</p>
+<%--           <p>${burger.image}</p>--%>
+       </c:forEach>
+    </div>
 </div>
-</body>
-</html>
+
+<%@include file="footer.jsp"%>
 <%--<!DOCTYPE html>--%>
 <%--<html>--%>
 <%--    <head>--%>

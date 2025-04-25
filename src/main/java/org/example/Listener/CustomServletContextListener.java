@@ -32,19 +32,22 @@ public class CustomServletContextListener implements ServletContextListener {
         ImageRepository imageRepository = new ImageRepositoryJdbcImpl(dataSource);
         BurgerRepository burgerRepository = new BurgerRepositoryJdbcImpl(dataSource);
         AddressRepository addressRepository = new AddressRepositoryJdbcImpl(dataSource);
-
         UserRepository userRepository = new UserRepositoryJdbcImpl(dataSource);
+
+
         SignUpService signUpService = new SignUpServiceImpl(userRepository, addressRepository);
         SignInService signInService = new SignInServiceImpl(userRepository);
         ProfileService profileService = new ProfileServiceImpl(userRepository);
         BurgerService burgerService = new BurgerServiceImpl(burgerRepository);
         OrderService orderService = new OrderServiceImpl(orderRepository);
+        ImageService imageService = new ImageServiceImpl(imageRepository);
 
         servletContext.setAttribute("signInService", signInService);
         servletContext.setAttribute("signUpService", signUpService);
         servletContext.setAttribute("profileService", profileService);
         servletContext.setAttribute("burgerService", burgerService);
         servletContext.setAttribute("orderService", orderService);
+        servletContext.setAttribute("imageService", imageService);
 
 
 

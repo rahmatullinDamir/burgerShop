@@ -16,7 +16,7 @@ public interface ImageService {
 
     void deleteImage(Long fileId) throws SQLException, IOException;
 
-    Image getImageByDay(Long burgerId) throws SQLException;
+    Image getImageByBurger(Long burgerId) throws SQLException;
 
     Image getImageByParam(String originalName, Long burgerId, Long size) throws SQLException;
 }

@@ -1,26 +1,25 @@
 package org.example.Servlets;
 
-import org.example.Listener.CustomServletContextListener;
+import org.example.dto.BurgerDto;
+import org.example.dto.BurgerWithImage;
 import org.example.service.BurgerService;
 import org.example.service.ImageService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextListener;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/")
 public class MainPageServlet extends HttpServlet {
     private  BurgerService burgerService;
     private ImageService imageService;
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
 
     @Override
     public void init() throws ServletException {
@@ -30,7 +29,17 @@ public class MainPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("burgers", burgerService.findAll());
+        List<BurgerDto> burgersDto = burgerService.findAll();
+        List<BurgerWithImage> burgerWithImages = new ArrayList<>();
+        for (BurgerDto burgerDto : burgersDto) {
+            try {
+                burgerWithImages.add(new BurgerWithImage(burgerDto, imageService.getImageByBurger(burgerDto.getId())));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            req.setAttribute("burgerWithImages", burgerWithImages);
+        }
+
         req.getRequestDispatcher("/jsp/mainPage.jsp").forward(req, resp);
     }
 }

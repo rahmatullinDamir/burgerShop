@@ -6,13 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.Models.Image;
 
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BurgerDto {
-    private Long id;
-    private int price;
-    private String name;
-    private String description;
+public class BurgerWithImage {
+    BurgerDto burger;
+    Image image;
 }
