@@ -1,6 +1,7 @@
 package org.example.Servlets;
 
 
+import org.example.dto.OrderDto;
 import org.example.service.OrderService;
 
 import javax.servlet.ServletConfig;
@@ -9,7 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/count")
 public class CountServet extends HttpServlet {
@@ -18,7 +22,21 @@ public class CountServet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        HttpSession session = req.getSession();
+        int cnt = 0;
+        try {
+            List<OrderDto> orderDtos = orderService.findOrdersByUserId((Long) session.getAttribute("id"));
+            for (OrderDto orderDto : orderDtos) {
+                cnt += orderDto.getQuantity();
+            }
+
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("UTF-8");
+            resp.getWriter().write("{\"count\":" + cnt + "}");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override

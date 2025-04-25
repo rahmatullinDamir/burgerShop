@@ -66,7 +66,7 @@ public class AdminServlet extends HttpServlet {
                     .build());
             BurgerDto burgerDto = burgerService.findByName(name);
             imageService.saveFileToStorage(part.getInputStream(), part.getSubmittedFileName(), part.getContentType(), burgerDto.getId(), part.getSize());
-resp.sendRedirect("/admin");
+            resp.sendRedirect("/admin");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

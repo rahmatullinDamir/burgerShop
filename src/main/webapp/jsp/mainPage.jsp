@@ -17,19 +17,32 @@
             <p>${burger.burger.name}</p>
             <p>${burger.burger.description}</p>
             <p>${burger.burger.price} rub</p>
-            <button onclick="updateCart(${burger.burger.id}, 'add')">Add to Cart</button>
+
+            <div class="quality">
+                <label for="quantity-${burger.burger.id}">Quantity:</label>
+                <input type="number" id="quantity-${burger.burger.id}" value="1" min="1" max="10">
+            </div>
+            <button onclick="updateCart(${burger.burger.id})">Add to Cart</button>
         </div>
     </c:forEach>
 </div>
 
 <script>
-    function updateCart(burgerId, action) {
-        fetch("${pageContext.request.contextPath}/cart", {
+    function updateCart(burgerId) {
+        const quantityInput = document.getElementById('quantity-'+ burgerId);
+        const quantity = parseInt(quantityInput.value);
+
+        if (isNaN(quantity) || quantity < 1) {
+            alert("Please enter a valid quantity.");
+            return;
+        }
+
+        fetch("${pageContext.request.contextPath}/", {
             method: "POST",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/json"
             },
-            body: `burgerId=${burgerId}&action=${action}`
+            body: JSON.stringify({ burgerId, quantity })
         })
             .then(response => {
                 if (!response.ok) {
@@ -38,12 +51,32 @@
                 return response.json();
             })
             .then(data => {
-                const cartCountElement = document.getElementById("cart-count");
-                cartCountElement.textContent = data.totalItems;
+                console.log("Success:", data);
+                up();
+                alert("Added to cart!");
             })
             .catch(error => {
                 console.error("There was a problem with the fetch operation:", error);
             });
+    }
+    async function up() {
+        try {
+            const response = await fetch('/count', {
+                method: 'GET',
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Количество бургеров в корзине:', data.count);
+            const cartCountElement = document.getElementById("cart-count");
+            cartCountElement.textContent = data.count;
+        } catch (error) {
+            console.error('Ошибка при получении количества бургеров:', error);
+        }
     }
 </script>
 <%@include file="footer.jsp"%>

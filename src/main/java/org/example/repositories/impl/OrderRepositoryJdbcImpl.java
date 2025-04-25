@@ -13,7 +13,7 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     private static final String SQL_SELECT_FROM_ORDER_BY_ID = "SELECT * FROM orders WHERE id = ?";
     private static final String SQL_SELECT_ALL = "SELECT * FROM orders";
     private static final String SQL_SELECT_FROM_ORDER_BY_USER = "SELECT * FROM orders WHERE userid = ?";
-    private static final String SQL_INSERT_NEW_ORDER = "INSERT INTO orders (userid, addressid, burgerid, quantity) VALUES (?, ?, ?, ?)";
+    private static final String SQL_INSERT_NEW_ORDER = "INSERT INTO orders (userid, burgerid, quantity) VALUES (?, ?, ?)";
     private static final String SQL_UPDATE_ORDER = "UPDATE orders SET userid = ?, burgerid = ?, quantity = ? WHERE id = ?";
     private static final String SQL_DELETE_ORDER = "DELETE FROM orders WHERE id = ?";
 

@@ -17,9 +17,24 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const cartCountElement = document.getElementById("cart-count");
-        cartCountElement.textContent = ${sessionScope.cart != null ? sessionScope.cart.size() : 0};
+    document.addEventListener("DOMContentLoaded", async function () {
+        try {
+            const response = await fetch('/count', {
+                method: 'GET',
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Количество бургеров в корзине:', data.count);
+            const cartCountElement = document.getElementById("cart-count");
+            cartCountElement.textContent = data.count;
+        } catch (error) {
+            console.error('Ошибка при получении количества бургеров:', error);
+        }
     });
 </script>
 <body>
